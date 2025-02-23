@@ -1,5 +1,7 @@
-﻿BinaryNode<string> binaryTree = new BinaryNode<string>("Root");
+﻿/*
+BinaryNode<string> binaryTree = new BinaryNode<string>("Root");
 binaryTree.AddLeft("A");
+var a = binaryTree.LeftNode;
 binaryTree?.LeftNode?.AddLeft("C");
 binaryTree?.LeftNode?.AddRight("D");
 
@@ -9,6 +11,25 @@ binaryTree?.RightNode?.RightNode?.AddLeft("F");
 
 Console.WriteLine(binaryTree);
 Console.WriteLine(binaryTree?.LeftNode);
+
+FindValue(binaryTree, "Root");
+FindValue(binaryTree, "E");
+FindValue(binaryTree, "F");
+FindValue(binaryTree, "Q");
+
+// Find D in the A subtree.
+FindValue(a, "D");
+
+
+
+void FindValue(BinaryNode<string> root, string target)
+{
+    BinaryNode<string> node = root.FindNode(target);
+    if (node == null)
+        Console.WriteLine(string.Format("Value {0} not found", target));
+    else
+        Console.WriteLine(string.Format("Found {0}", node.Value));
+}
 
 public class BinaryNode<T>(T value)
     {
@@ -56,4 +77,31 @@ public class BinaryNode<T>(T value)
 
             return result;
         }
+
+    public BinaryNode<T>? FindNode(T value)
+    {
+        if (Value != null && Value.Equals(value))
+        {
+            return this;
+        }
+
+        if (LeftNode != null)
+        {
+            var leftSearch = LeftNode.FindNode(value);
+            if (leftSearch != null)
+            {
+                return leftSearch;
+            }
+        }
+        if (RightNode != null)
+        {
+            var rightSearch = RightNode.FindNode(value);
+            if (rightSearch != null)
+            {
+                return rightSearch;
+            }
+        }
+        return null;
     }
+}
+*/
