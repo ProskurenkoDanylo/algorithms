@@ -21,6 +21,31 @@ FindValue(NaryTree, "Q");
 // Find F in the C subtree.
 FindValue(c, "F");
 
+string result;
+result = "Preorder:      ";
+foreach (NaryNode<string> node in NaryTree.TraversePreorder())
+{
+    result += string.Format("{0} ", node.Value);
+}
+
+string resultPostOrder;
+resultPostOrder = "PostOrder:      ";
+foreach (NaryNode<string> node in NaryTree.TraversePostorder())
+{
+    resultPostOrder += string.Format("{0} ", node.Value);
+}
+
+string resultBreadthFirst;
+resultBreadthFirst = "BreadthFirst:      ";
+foreach (NaryNode<string> node in NaryTree.TraverseBreadthFirst())
+{
+    resultBreadthFirst += string.Format("{0} ", node.Value);
+}
+
+Console.WriteLine(result);
+Console.WriteLine(resultPostOrder);
+Console.WriteLine(resultBreadthFirst);
+
 void FindValue(NaryNode<string> root, string target)
 {
     NaryNode<string> node = root.FindNode(target);
@@ -74,5 +99,43 @@ public class NaryNode<T>(T value)
             }
         }
         return null;
+    }
+
+    public List<NaryNode<T>> TraversePreorder()
+    {
+        List<NaryNode<T>> nodes = new() { this };
+        foreach (var child in Children)
+        {
+            nodes.AddRange(child.TraversePreorder());
+        }
+        return nodes;
+    }
+
+    public List<NaryNode<T>> TraversePostorder()
+    {
+        List<NaryNode<T>> nodes = new() { };
+        foreach (var child in Children)
+        {
+            nodes.AddRange(child.TraversePostorder());
+        }
+        nodes.Add(this);
+        return nodes;
+    }
+
+    public List<NaryNode<T>> TraverseBreadthFirst()
+    {
+        List<NaryNode<T>> nodes = new() { };
+        Queue<NaryNode<T>> queue = new();
+        queue.Enqueue(this);
+        while (queue.Count > 0)
+        {
+            var node = queue.Dequeue();
+            nodes.Add(node);
+            foreach (var child in node.Children)
+            {
+                queue.Enqueue(child);
+            }
+        }
+        return nodes;
     }
 }
